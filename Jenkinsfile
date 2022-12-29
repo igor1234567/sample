@@ -12,7 +12,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                    sh '''docker build . -t lidorlg/node:${BUILD_ID} '''
+                    sh '''docker build . -t igorripin/sample_nodejs:${BUILD_ID} '''
                
             }
         }
