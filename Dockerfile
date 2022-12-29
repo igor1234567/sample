@@ -8,7 +8,7 @@ WORKDIR /app
 # where available (npm@5+)
 RUN git clone https://github.com/digitalocean/sample-nodejs.git
 
-COPY sample-nodejs/package*.json ./
+COPY package*.json ./
 
 RUN npm install
 # If you are building your code for production 
