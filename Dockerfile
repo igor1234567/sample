@@ -8,14 +8,12 @@ WORKDIR /app
 # where available (npm@5+)
 RUN git clone https://github.com/digitalocean/sample-nodejs.git
 
-COPY package*.json ./
-
+#COPY package*.json ./
+COPY . .
 RUN npm install
 # If you are building your code for production 
 # RUN npm ci --only=production
 
-# Bundle app source nohup node index.js 
-COPY . .
 
 EXPOSE 3000
 CMD ["node", "index.js"]
