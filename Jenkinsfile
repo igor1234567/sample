@@ -6,29 +6,29 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'app_sample']], userRemoteConfigs: [[url: 'https://github.com/digitalocean/sample-nodejs.git']]])
+           
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'sample-app']], userRemoteConfigs: [[url: 'https://github.com/digitalocean/sample-nodejs.git']]])
             }
         }
-        stage('build docker') {
-                steps {
-                    sh 'pwd'
-                    sh 'ls'
-                    sh "docker build -t igorripin/sample_nodejs:${BUILD_ID} ."
-                }
+        stage('Build') {
+            steps {
+                    sh '''docker build . -t lidorlg/node:${BUILD_ID} '''
+               
             }
-
+        }
         stage('Test') {
             steps {
-                //sh 'nohup node index.js &'
-           	sh "docker run -itd -p 3000:3000 --name sample_container igorripin/sample_nodejs:${BUILD_ID}"
+                sh 'docker run  --name node-test -itd -p 3000:3000 igorripin/sample_nodejs:${BUILD_ID} '
                 sh 'curl localhost:3000'
+                sh 'docker stop node-test'
+                sh 'docker rm node-test'
    
             }
         }
-        stage('Package') {
+        stage('Push to Docker Hub ') {
             steps {
-	        sh "docker push igorripin/sample_nodejs:${BUILD_ID} "
+                sh "docker push igorripin/sample_nodejs:${BUILD_ID} "
+
             }
         }
     }
@@ -37,7 +37,7 @@ pipeline {
              chuckNorris()  
               
             }
-        /*aborted {
+       /* aborted {
              slackSend channel: '#general', message: 'build was aborted'
          }
         failure {
