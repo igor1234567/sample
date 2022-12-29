@@ -18,10 +18,10 @@ pipeline {
         }
         stage('Test') {
             steps {
-                sh 'docker run  --name node-test -itd -p 3000:3000 igorripin/sample_nodejs:${BUILD_ID} '
+                sh 'docker run  --name node-test_2 -itd -p 3000:3000 igorripin/sample_nodejs:${BUILD_ID} '
                 sh 'curl localhost:3000'
-                sh 'docker stop node-test'
-                sh 'docker rm node-test'
+                sh 'docker stop node-test_2'
+                sh 'docker rm node-test_2'
    
             }
         }
