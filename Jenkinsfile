@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Push to Docker Hub ') {
             steps {
-                sh "docker push igorripin/sample_nodejs:${BUILD_ID} "
+                sh "docker push igorripin/sample_nodejs:${BUILD_ID}"
 
             }
         }
