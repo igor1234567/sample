@@ -12,12 +12,12 @@ pipeline {
         }
         stage('build docker') {
                 steps {
-                    sh "docker build -t myimage:${BUILD_ID} ."
+                    sh "docker build -t igorripin/sample_nodejs:${BUILD_ID} ."
                 }
             }
         stage('run') {
             steps {
-                sh "docker run -itd -p 3000:3000 myimage:${BUILD_ID}"
+                sh "docker run -itd -p 3000:3000 --name sample_container igorripin/sample_nodejs:${BUILD_ID}"
                
             }
         }
