@@ -28,6 +28,7 @@ pipeline {
         }
         stage('Push to Docker Hub ') {
             steps {
+                    dockerImage = docker.build("igorripin/sample_nodejs:${BUILD_ID}")
                 withDockerRegistry([ credentialsId: "igorripin-dockerhub", url: "" ]) {
              dockerImage.push()
                 //sh "docker push igorripin/sample_nodejs:${BUILD_ID}"
