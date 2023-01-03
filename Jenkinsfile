@@ -2,6 +2,9 @@ pipeline {
         agent {
   label 'centos7'
         } 
+        environment {
+		DOCKERHUB_CREDENTIALS=credentials('igorripin-dockerhub')
+	}
 
     stages {
         stage('Checkout Code') {
@@ -26,6 +29,14 @@ pipeline {
    
             }
         }
+            
+        stage('Login') {
+
+                steps {
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                }
+        }
+            
         stage('Push to Docker Hub ') {
             steps {
                 sh "docker push igorripin/sample_nodejs:${BUILD_ID}"
